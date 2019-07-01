@@ -39,13 +39,13 @@ Is the root object that handles the whole form.
 Returns an Input-like Object (named as `Element` in `AutoForm`) with the type specified in `input_type`. `AutoForm` saves a reference of that input with the key `input_id`. Some extra `...args` could be necesary depending of the input type.
 
 The type can be:
-* text
-* number
-* checkbox
-* range
-* select
-* radio
-* checkgroup
+* text.
+* number.
+* checkbox.
+* range.
+* select (require a list of strings as extra arguments. Will be the options availables on select).
+* radio (require a string and a list of strings as extra arguments. The string will be the group name for radios, and the list of strings will be the labels of those radios).
+* checkgroup (require a list of strings as extra arguments. Will be the labels of each checkbox).
 
 ##### `create_label([labels_list, class_name])`:
 Returns an `InputLabel` object. `label_list` is a strings list. Each string item in the list are displayed inside a common `div` where will be placed with inputs aswell. `class_name` is the css class of the whole `div` that contains everything that will be displayed. If you dont give any params, an empty `div` is created.
@@ -109,7 +109,62 @@ Set attributes for inputs tags. E.g: `input.set_attributes({min: 0, max: 100, st
 ##### `binding_event(event_type, callback)`:
 Creates an event binding for an input. Under the hood `addEventListener()` is called. The callback function is binded to the `AutoForm` `Element` object, so you must use `Element` methods on those callbacks. You also can call `get_node()` if `Element` methods dont fit your need.
 
-NOTE: in radio and checkgroup types, `binding_event()` params are `({event_type[, input_index], callback})`. Because you have a list of inputs related to the object, you must specify what concrete input you want to bind the event. If is no index passed, iterates over the input list you pass at creation to bind the same callback to every input in the group. Anyway, at callback level you still can use the `Element` methods to handle inputs independently, because the bind of callback is at input level and not at group level.
+NOTE: in radio and checkgroup types, `binding_event()` params are `({event_type [, input_index], callback})`. Because you have a list of inputs related to the object, you must specify what concrete input you want to bind the event. If is no index passed, iterates over the input list you pass at creation to bind the same callback to every input in the group. Anyway, at callback level you still can use the `Element` methods to handle inputs independently, because the bind of callback is at input level and not at group level.
 
+---
+
+### Class `InputLabel`:
+
+A holder for text messages and inputs. Can hold a few texts and inputs, not just one.
+
+#### `InputLabel` methods:
+##### `get_node()`:
+Returns the DOM Node.
+
+##### `set_attributes(attributes_JSON [, label_index])`:
+According to the list passed on `AutoForm.create_label()`. If an label index is passed, will be setted the attributes of `div` that contains the text message indicated. If no label index was passed, the attributes will be setted to the global label `div` that enclose all the `div`s that contain the text messages.
+
+##### `set_text(text [, label_position])`:
+If you want change the text of some message on input event. `label_position` is the index of the message you want to change, according to the list passed on `create_label()`. If no `label_position` was passed, will be setted the text of the first item in the list.
+
+##### `insert_item(input_object [, position])`:
+For insert inputs into the global label `div`. If a `position` is given, the insertion will be at the index indicated. If no `position` is passed, will be appended to the end of the Node.
+
+---
+
+### Class `SubForm`:
+
+#### `SubForm` methods: 
+##### `get_node()`:
+
+##### `set_attributes(attributes_json)`:
+
+##### `create_input(input_id, input_type, ...args)`:
+
+##### `create_label(labels_list, class_name)`:
+
+##### `create_subform(subform_id, func_parser)`:
+
+##### `create_mutable_select(mutable_id, mutable_options_list)`:
+
+##### `insert_item(item)`:
+
+##### `get_value()`:
+
+##### `set_value(values)`:
+
+
+---
+
+### Class `FormMutableSelect`:
+
+#### `FormMutableSelect` methods:
+##### `get_node()`:
+
+##### `set_attributes(attributes_json)`:
+
+##### `get_value()`:
+
+##### `set_value(values)`:
 
 
