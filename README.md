@@ -89,6 +89,7 @@ Those functions set the labels of submit and cancel form buttons. By default the
 ### Class `Element` a.k.a. inputs:
 
 The inputs-like objects. Those created with `created_input()` method. 
+
 The inputs can be:
 * text: returns a string.
 * number: returns a number (integer or float).
