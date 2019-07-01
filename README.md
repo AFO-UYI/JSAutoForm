@@ -51,10 +51,11 @@ The type can be:
 Returns an `InputLabel` object. `label_list` is a strings list. Each string item in the list are displayed inside a common `div` where will be placed with inputs aswell. `class_name` is the css class of the whole `div` that contains everything that will be displayed. If you dont give any params, an empty `div` is created.
 
 ##### `create_subform(subform_id, func_parser)`:
-Returns a `SubForm` object. Works like `Autoform`, but serving a way to packing some key-values (id-inputs) as value of `subform-id` key.
+Returns a `SubForm` object. Works like `Autoform`, but serving a way to packing some key-values (id-inputs) as value of `subform-id` key. In the body of the anonymous function passed as parameter, the keyword `this` is attached to the `SubForm` object, not to `AutoForm`.
 
 ##### `create_mutable_select(mutable_id, mutable_options_list)`:
-Returns a `FormMutableSelect`. `mutable_options_list` is a list of anonymous functions which contains form builder algorithms. 
+Returns a `FormMutableSelect`. `mutable_options_list` is a list of JSONs with two keys: `{option_label, subform_builder}`. `option_label` is a string and `subform_builder` is an anonymous function which contains form builder algorithms. 
+In the body of each anonymous functions, the keyword `this` is attached to a inner `SubForm` object, not to `AutoForm`.
 
 ##### `insert_item(item)`:
 Append to `AutoForm` the item param. Oftenly, you will pass an `InputLabel` object, but you can pass any created object by `AutoForm`.
@@ -134,37 +135,36 @@ For insert inputs into the global label `div`. If a `position` is given, the ins
 
 ### Class `SubForm`:
 
+Works like the root object `AutoForm`, but is enclosing to the key with it was created on `create_subform()`. So, when submit return JSON, a subform appears as a sub JSON attached to a key of the main JSON. You must be aware that everything you want enclosed at subform returned values, must be created from the subform object and not from the root `AutoForm` object.
+
 #### `SubForm` methods: 
 ##### `get_node()`:
+Returns de DOM Node.
 
-##### `set_attributes(attributes_json)`:
-
-##### `create_input(input_id, input_type, ...args)`:
-
-##### `create_label(labels_list, class_name)`:
-
-##### `create_subform(subform_id, func_parser)`:
-
-##### `create_mutable_select(mutable_id, mutable_options_list)`:
-
-##### `insert_item(item)`:
+##### `set_attributes(attributes_json)`,  `create_input(input_id, input_type, ...args)`, `create_label(labels_list, class_name)`,  `create_subform(subform_id, func_parser)`, `create_mutable_select(mutable_id, mutable_options_list)`, `insert_item(item)`:
+Preform the same behaviour as previously descrived on `Element` or `AutoForm` according where methods appears, just being preformed over the `SubForm` object. Is important take care from what object are you calling the `create_thing()` methods, because those items will be attached and returned from where you call it. `insert_item()` is just about where will be displayed on HTML, not about where will be the logical data structure returned by `AutoForm`.
 
 ##### `get_value()`:
+Returns a JSON where the keys are the ids you passed in `create_thing()` methods, and values are the return of the inputs you create. Is like the submit of the root `AutoForm` object, but cant be submit because is not the root.
 
 ##### `set_value(values)`:
-
+Set the values of inputs that `SubForm` contains. Must be a valid JSON structure according the inputs you create in the `SubForm`.
 
 ---
 
 ### Class `FormMutableSelect`:
+Create a select input. When you change the value of select, a mutable `div` is cleaned and filled with the attached subform to that selected option.
 
 #### `FormMutableSelect` methods:
 ##### `get_node()`:
+Returns de DOM Node.
 
 ##### `set_attributes(attributes_json)`:
+Set the attributes of main `div` which contains the select tag and mutable `div`.
 
 ##### `get_value()`:
+Returns a JSON with keys `{item_selected, mutant_content}`. `item_selected` is the index of selected option on `select` tag. `mutable_content` contains the JSON returned by the `SubForm` attached to the selected option.
 
 ##### `set_value(values)`:
-
+Set the values for the `select` tag and proper `SubForm`. Values must respect the format of returned JSON by `get_value()` of `FormMutableSelect`.
 
