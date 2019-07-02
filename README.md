@@ -9,7 +9,7 @@ Before of the `</body>` tag, you get the `JSAutoForm` file and instance an `Auto
 
 ```html
   <div id="my_auto_form"></div>
-  <script src="/path_to/autoform.js" charset="utf-8"></script>
+  <script src="/path_to/autoform.min.js" charset="utf-8"></script>
   <script type="text/javascript">
     let formulario = new AutoForm('my_auto_form',                     // AutoForm object is instanced
       function(){
@@ -25,6 +25,18 @@ Before of the `</body>` tag, you get the `JSAutoForm` file and instance an `Auto
   </script>
 </body>
 ```
+
+If you want use the module version:
+
+```html
+  <div id="my_auto_form"></div>
+  <script type="module" charset="utf-8">
+      import { AutoForm } from '/path_to/autoform_module.min.js';
+    let formulario = new AutoForm('my_auto_form',                     // AutoForm object is instanced
+      function(){
+        ...     // compose your form.
+```
+The usage of both version are the same. But this could change for module version.
 
 There are a few objects and methods to composite your form builder algorithm.
 
@@ -169,3 +181,7 @@ Returns a JSON with keys `{item_selected, mutant_content}`. `item_selected` is t
 ##### `set_value(values)`:
 Set the values for the `select` tag and proper `SubForm`. Values must respect the format of returned JSON by `get_value()` of `FormMutableSelect`.
 
+# TO-DOs:
+* Clean a few redundant methods.
+* Add extra input types created with pure html.
+* Sustitute included input types with inputs created with pure html, improving the customization
