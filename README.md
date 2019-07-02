@@ -3,6 +3,50 @@ JSAutoForm
 
 JSAutoForm is a lightweight file with objects that make easier dealing with HTML form. You just need be aware of exceptions you want to have and create the form, the rest will go automatically. The data collected by the form will be returned locally, so you could preform local task or sending the data after validate it on client side.
 
+* Usage
+  * AutoForm class
+    * Methods
+      * create_input()
+      * create_label()
+      * create_subform()
+      * create_mutable_select()
+      * insert_item()
+      * set_form_info()
+    * Events
+      * on_submit_commit
+      * on_submit_validation
+      * on_submit_exception
+      * on_prepare_canel
+    * Customization
+      * set_submit(cancel)_label
+  * Element class
+    * Methods
+      * get_value()
+      * get_node()
+      * set_value()
+      * set_attributes()
+      * binding_event()
+  * InputLabel class
+    * Methods
+      * get_node()
+      * set_attributes()
+      * set_text()
+      * insert_item()
+  * SubForm class
+    * Methods
+      * get_node()
+      * some methods shared with AutoForm methods
+      * get_value()
+      * set_value()
+  * FormMutableSelect class
+    * Methods
+      * get_node()
+      * set_attributes()
+      * get_value()
+      * set_value()
+* CSS Customization
+* TO-DOs
+
 # Usage
 
 Before of the `</body>` tag, you get the `JSAutoForm` file and instance an `AutoForm` object, passing the id of the `div` where the form will be inserted and an anonymous function that build the form. In this example, we create a label-like with `this.create_label()` which contains a `div` with the text 'Insert your name:'. Then an input text type is created with `this.create_input(_, 'text')`, the input is inserted on the label and the whole label (including input) is inserted on the form. Finally, an anonymous function is attached to `on_submit_commit` autoform event.
@@ -42,7 +86,7 @@ There are a few objects and methods to composite your form builder algorithm.
 
 ---
 
-### Class `AutoForm`:
+### `AutoForm` class:
 
 Is the root object that handles the whole form.
 
@@ -98,7 +142,7 @@ Those functions set the labels of submit and cancel form buttons. By default the
 
 ---
 
-### Class `Element` a.k.a. inputs:
+### `Element` class a.k.a. inputs:
 
 The inputs-like objects. Those created with `created_input()` method. 
 
@@ -127,7 +171,7 @@ NOTE: in radio and checkgroup types, `binding_event()` params are `({event_type 
 
 ---
 
-### Class `InputLabel`:
+### `InputLabel` class:
 
 A holder for text messages and inputs. Can hold a few texts and inputs, not just one.
 
@@ -146,7 +190,7 @@ For insert inputs into the global label `div`. If a `position` is given, the ins
 
 ---
 
-### Class `SubForm`:
+### `SubForm` class:
 
 Works like the root object `AutoForm`, but is enclosing to the key with it was created on `create_subform()`. So, when submit return JSON, a subform appears as a sub JSON attached to a key of the main JSON. You must be aware that everything you want enclosed at subform returned values, must be created from the subform object and not from the root `AutoForm` object.
 
@@ -165,7 +209,7 @@ Set the values of inputs that `SubForm` contains. Must be a valid JSON structure
 
 ---
 
-### Class `FormMutableSelect`:
+### `FormMutableSelect` class:
 Create a select input. When you change the value of select, a mutable `div` is cleaned and filled with the attached subform to that selected option.
 
 #### `FormMutableSelect` methods:
@@ -180,6 +224,14 @@ Returns a JSON with keys `{item_selected, mutant_content}`. `item_selected` is t
 
 ##### `set_value(values)`:
 Set the values for the `select` tag and proper `SubForm`. Values must respect the format of returned JSON by `get_value()` of `FormMutableSelect`.
+
+# Customization
+
+Your own `div` with id passed to AutoForm object instance will contain two `div`s. One contain the form itself, and have as id `your_own_id + '_form_box'`. While the other `div` have the submit and cancel buttons with id `your_own_id + '_buttons_box'`.
+
+`checkboxgroup`, `radio`, `subform` and `form_mutable_select` will have `checkboxgroup`, `radiogroup`, `subform` and `mutable_subform` css classes respectively.
+
+Those ids and classes have no predefined rules. All CSS customization is yours. Eventually `AutoForm` will have all inputs with html only, so will be more customizable.
 
 # TO-DOs:
 * Clean a few redundant methods.
