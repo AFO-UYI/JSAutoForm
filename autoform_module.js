@@ -14,7 +14,7 @@ export class AutoForm {
       'range': SimpleRange,
       'select': Select,
       'radio': RadioGroup,
-      'checkgroup': CheckboxGroup
+      'checkboxgroup': CheckboxGroup
     }
 
     this.form_name = form_name;
