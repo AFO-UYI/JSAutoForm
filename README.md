@@ -237,3 +237,4 @@ Those ids and classes have no predefined rules. All CSS customization is yours. 
 * Clean a few redundant methods.
 * Add extra input types created with pure html.
 * Sustitute included input types with inputs created with pure html, improving the customization
+* Add a method to `AutoForm` object, expecting a JSON as param with inputs and labels info, and build the form from that.
