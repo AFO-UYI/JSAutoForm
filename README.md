@@ -4,7 +4,7 @@ JSAutoForm
 JSAutoForm is a lightweight file with objects that make easier dealing with HTML form. You just need be aware of exceptions you want to have and create the form, the rest will go automatically. The data collected by the form will be returned locally, so you could preform local task or sending the data after validate it on client side.
 
 * [Usage](https://github.com/AFO-UYI/JSAutoForm#usage)
- * [Example](https://github.com/AFO-UYI/JSAutoForm#example)
+  * [Example](https://github.com/AFO-UYI/JSAutoForm#example)
 * [CSS Customization](https://github.com/AFO-UYI/JSAutoForm#css-customization)
 * [Objects (methods and events)](https://github.com/AFO-UYI/JSAutoForm#objects-methods-and-events)
   * [AutoForm class](https://github.com/AFO-UYI/JSAutoForm#autoform-class)
