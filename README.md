@@ -6,7 +6,7 @@ JSAutoForm is a lightweight file with objects that make easier dealing with HTML
 * [Usage](https://github.com/AFO-UYI/JSAutoForm#usage)
  * [Example](https://github.com/AFO-UYI/JSAutoForm#example)
 * [CSS Customization](https://github.com/AFO-UYI/JSAutoForm#css-customization)
-* [Objects (methods and events)]()
+* [Objects (methods and events)](https://github.com/AFO-UYI/JSAutoForm#objects-methods-and-events)
   * [AutoForm class](https://github.com/AFO-UYI/JSAutoForm#autoform-class)
     * [Methods](https://github.com/AFO-UYI/JSAutoForm#autoform-methods)
       * [create_input()](https://github.com/AFO-UYI/JSAutoForm#create_inputinput_id-input_type--args)
