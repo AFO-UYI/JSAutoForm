@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    ola que ase
+    <div id="my_form"></div>
+    <script src="autoform.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+    let my_form = new AutoForm('my_form',    // instance AutoForm object
+      function(){
+
+        this.set_submit_button_label('Aceptar', true);  // Setting a diferent label for submit button by default
+        this.set_cancel_button_label('Cancelar', true); // Same for cancel button
+
+        let subform_user = this.create_subform('user', function(){  // creating a subform object
+          // start of the anon function for subform build. Now "this" is not autoform, is "user" subform
+
+          let label_name = this.create_label(['Your name:']);    // creating a label
+
+          this.insert_item(label_name);    //inserting label_name node into subform node
+
+          let input_name = this.create_input('name', 'text');  // creating an input text,
+              //create an input, subform or mutable saves a reference with a key in the object "this"
+
+          label_name.insert_item(input_name);    // inserting input node into label node
+
+          let label_age = this.create_label(['Your birthday: ']); // creating and inserting another label
+
+          this.insert_item(label_age); //insert label age into subform "user" node
+
+          let birthday = this.create_subform('birthday', function(){ // creating a subform inside a subform
+            // now inside the anon function for birthday subform. "this" isnt user subform now.
+
+            let birthday_label = this.create_label(['/', '/']); // creating a label with 2 "/" string blocks ["/", "/"]
+
+            let input_birthday_day = this.create_input('day', 'number');  // creating 3 inputs
+            let input_birthday_month = this.create_input('month', 'number');
+            let input_birthday_year = this.create_input('year', 'number');
+
+            birthday_label.insert_item(input_birthday_month, 0);  // inserting month input in label at position 0.
+                                                                  // now label have 3 blocks. 2 "/" and 1 input at 0. [input, "/", "/"]
+
+            birthday_label.insert_item(input_birthday_day, 2);    // inserting day input in label at position 2. label = [input, "/", input, "/"]
+
+            birthday_label.insert_item(input_birthday_year);   // append year input into label. finally label is [input, "/", input, "/", input]
+
+            this.insert_item(birthday_label); // inserting birthday label node into subform "birthday" node.
+
+            // finish birthday subform anon function. "this" is "user" subform again.
+          });
+
+          label_age.insert_item(birthday); // inserting birthday subform node into label_age node
+
+          let work_label = this.create_label(['Your work situation:'])
+          let work_input = this.create_input('work', 'radio', 'work', ['employed', 'unemployed']); // creating a radio group.
+
+          work_label.insert_item(work_input);
+          this.insert_item(work_label);
+
+          // finish user subform. Now "this" is AutoForm again.
+        });
+
+        this.insert_item(subform_user); // inserting "user" subform node into AutoForm node.
+
+        let mutable_part = this.create_mutable_select('extra_user_info', // creating a mutable select
+        // each anon function in the array have their own "this"
+
+        [{option_label: 'happyness', subform_builder: function(){
+          let happyness_label = this.create_label(['Are you happy?']);
+          let happyness_input = this.create_input('happyness', 'checkbox');
+
+          happyness_label.insert_item(happyness_input, 0);
+          this.insert_item(happyness_label);
+
+          let puntuation_label = this.create_label(['Insert a puntuation: ', 'X']);
+          let puntuation_input = this.create_input('puntuation', 'range');
+
+          puntuation_input.set_attributes({min:50, max: 100});
+          // setting attributes for range input
+
+          puntuation_input.binding_event('input', function(){ puntuation_label.set_text(this.get_value(), 1) });
+          // binding a on_input event for range input. Change text with current value of range input on string block 1 in puntuation label
+          // on bindings, inside the anon function, "this" is the Element (autoform input) object.
+
+          puntuation_label.insert_item(puntuation_input, 1);
+          this.insert_item(puntuation_label);
+        }},
+
+        {option_label: 'work', subform_builder: function(){
+          let like_label = this.create_label(['What you prefer:']);
+          let like_input = this.create_input('prefered_task', 'select',
+            ['programing', '3D modeling', 'music compositing']);
+
+          like_label.insert_item(like_input);
+          this.insert_item(like_label);
+        }},
+
+        {option_label: 'games', subform_builder: function(){
+          let games_label = this.create_label(['Select games you want:']);
+          let games_input = this.create_input('games', 'checkboxgroup', ['dark souls',
+           'fifa19', 'Resident Evil', 'Sekiro', 'Metroid Prime']);
+
+          games_label.insert_item(games_input);
+          this.insert_item(games_label);
+        }}]);
+
+        this.insert_item(mutable_part); // inserting mutable_select node into autoform node.
+      });
+
+      my_form.on_submit_validation = function(form_values){
+        // this is for check values. e.g
+        if (form_values['user']['name'] === '') {
+          return 'Name input cant be empty'; // the returned data can be what you want
+        }
+
+        // if this functions is not defined will commit every submit value
+      }
+
+      my_form.on_submit_exception = function(excetions){
+        // this is where you preform what you want with your own returned exceptions from
+        // on_submit_validation
+        alert(exceptions);
+
+        // if this functions is not defined but you defined exceptions ans returns something
+        // will throw an error to console with exceptions data
+      }
+
+      my_form.on_prepare_cancel = function(){
+        // this is to preform whatever you want before rollback. e.g.
+        return !confirm('are you sure?');
+
+        // must return true to proceed the roolback or false to avoid it.
+      }
+
+      my_form.on_submit_commit = function(form_values){
+        console.log(JSON.stringify(form_values));
+
+        /* this will print in console
+        {"user":
+            {"name":"Jesus",
+             "birthday":
+                  {"day":13,
+                   "month":12,
+                   "year":1993},
+             "work":1},
+         "extra_user_info":
+            {"item_selected": the index option selected,
+             "mutant_content": a JSON returned by the selected form
+            }
+        }
+        */
+      }
+    </script>
+  </body>
+</html>
