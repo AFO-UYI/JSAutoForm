@@ -4,6 +4,9 @@ JSAutoForm
 JSAutoForm is a lightweight file with objects that make easier dealing with HTML form. You just need be aware of exceptions you want to have and create the form, the rest will go automatically. The data collected by the form will be returned locally, so you could preform local task or sending the data after validate it on client side.
 
 * [Usage](https://github.com/AFO-UYI/JSAutoForm#usage)
+ * [Example](https://github.com/AFO-UYI/JSAutoForm#example)
+* [CSS Customization](https://github.com/AFO-UYI/JSAutoForm#css-customization)
+* [Objects (methods and events)]()
   * [AutoForm class](https://github.com/AFO-UYI/JSAutoForm#autoform-class)
     * [Methods](https://github.com/AFO-UYI/JSAutoForm#autoform-methods)
       * [create_input()](https://github.com/AFO-UYI/JSAutoForm#create_inputinput_id-input_type--args)
@@ -44,7 +47,6 @@ JSAutoForm is a lightweight file with objects that make easier dealing with HTML
       * [set_attributes()](https://github.com/AFO-UYI/JSAutoForm#set_attributesattributes_json-1)
       * [get_value()](https://github.com/AFO-UYI/JSAutoForm#get_value-2)
       * [set_value()](https://github.com/AFO-UYI/JSAutoForm#set_valuevalues-1)
-* [CSS Customization](https://github.com/AFO-UYI/JSAutoForm#css-customization)
 * [TO-DOs](https://github.com/AFO-UYI/JSAutoForm#to-dos)
 
 # Usage
@@ -82,9 +84,21 @@ If you want use the module version:
 ```
 The usage of both version are the same. But this could change for module version.
 
-There are a few objects and methods to composite your form builder algorithm.
-
 ---
+
+### Example
+
+You can find [here](https://github.com/AFO-UYI/JSAutoForm/blob/master/example.html) a more detailed comented example.
+
+# CSS Customization
+
+Your own `div` with id passed to AutoForm object instance will contain two `div`s. One contain the form itself, and have as id `your_own_id + '_form_box'`. While the other `div` have the submit and cancel buttons with id `your_own_id + '_buttons_box'`.
+
+`checkboxgroup`, `radio`, `subform` and `form_mutable_select` will have `checkboxgroup`, `radiogroup`, `subform` and `mutable_subform` css classes respectively.
+
+Those ids and classes have no predefined rules. All CSS customization is yours. Eventually `AutoForm` will have all inputs with html only, so will be more customizable.
+
+# Objects (methods and events)
 
 ### `AutoForm` class:
 
@@ -224,14 +238,6 @@ Returns a JSON with keys `{item_selected, mutant_content}`. `item_selected` is t
 
 ##### `set_value(values)`:
 Set the values for the `select` tag and proper `SubForm`. Values must respect the format of returned JSON by `get_value()` of `FormMutableSelect`.
-
-# CSS Customization
-
-Your own `div` with id passed to AutoForm object instance will contain two `div`s. One contain the form itself, and have as id `your_own_id + '_form_box'`. While the other `div` have the submit and cancel buttons with id `your_own_id + '_buttons_box'`.
-
-`checkboxgroup`, `radio`, `subform` and `form_mutable_select` will have `checkboxgroup`, `radiogroup`, `subform` and `mutable_subform` css classes respectively.
-
-Those ids and classes have no predefined rules. All CSS customization is yours. Eventually `AutoForm` will have all inputs with html only, so will be more customizable.
 
 # TO-DOs:
 * Clean a few redundant methods.
